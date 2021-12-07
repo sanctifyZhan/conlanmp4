@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://unpkg.com/aframe-chromakey-material/dist/aframe-chromakey-material.min.js"></script>
+
+	
+	  <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
+    <script src="inflate.min.js"></script>
+    
+    <style>
+	       .overlay {
+            position: fixed;
+            /* Sit on top of the page content */
+            width: 100%;
+            /* Full width (cover the whole page) */
+            height: 100%;
+            /* Full height (cover the whole page) */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("backgroundWhile.PNG");
+            /*   background-color:#ffffff; Black background with opacity */
+            z-index: 2;
+            /* Specify a stack order in case you're using a different order for other elements */
+            cursor: pointer;
+            /* Add a pointer on hover */
+        }
+
+       .uimusic {
+        position: absolute;
+        z-index: 100;
+        top: 80%;
+        right: 4%;
+        width: 90%;
+        height: 18%;
+        box-sizing: border-box;
+      }
+    </style>
+	
+</head>
+ <script>
+  AFRAME.registerComponent('plane', {
+    init: function () {
+      const material = this.el.getObject3D('mesh').material;
+     // material.colorWrite = false;
+    }
+  });
+</script>
+	
+<body style="margin : 0px; overflow: hidden;">
+    <a-scene embedded="true" arjs='debugUIEnabled:false; trackingMethod: best;'
+        device-orientation-permission-ui="enabled: false" vr-mode-ui="enabled: false" loading-screen="enabled:false"
+        precision: mediump>
+	    
+ <a-plane
+    plane
+    color="blue"
+    width="0.5"
+    height="1"
+    position="0 4 -2"
+  ></a-plane>
+	    
+	
+	  <a-assets>
+		
+          	 <img id="my-image2"src="2.png">
+		   <img id="my-image">
+		 <a-asset-item id="thu" response-type="arraybuffer" src="omikuji_aniani.glb"></a-asset-item>
+	 </a-assets>
+	   
+	    
+        
+        
+         <video id="vid" src="cutA.mp4" playsinline webkit-playsinline muted> </video>
+        
+        <a-marker type='pattern' url='patter.patt' markerhandler> </a-marker>
+
+  <a-entity id="thuthatfbx" position="-0.38 -0.12 -1.6" scale=".1 .1 .1" fbx-model="src: 1M_BOX_ANI.fbx;" visible="false" shadow="receive: true; cast: true" animation-mixer="clip:anii"></a-entity>
+			  
+   <a-entity id="idfbx" position="0 0 -5.5" scale=".5 .5 .5" fbx-model="src: position_model_normal.fbx;" visible="false" shadow="receive: true; cast: true"></a-entity>
+	
+   <a-entity id="thuthat" position="0 -1.3 -2.5" scale=".9 .9 .9" gltf-model="#thu" visible="true" animation-mixer="clip:aniu;loop:2"></a-entity>
+	    
+	    
+	    
+	<a-image clickhandler src="#my-image2" id="aimage2" position="0 -0.3 -1" visible="false" height="0.15" width="0.4">   </a-image>
+	<a-image src="#my-image" id="aimage" position="-0.005 0.05 -0.95" visible="false" height="0.9" width="1">       </a-image>
+        
+        <a-entity camera position="0 0 0"></a-entity>
+       
+      
+         
+            
+             <a-video id="aVideoHide" src="#vid" position="0 0 0" visible="true" rotation="-90 0 0" height="3px" width="3px"
+                material="shader: chromakey; color: 0.1 0.9 0.2"></a-video>
+        
+        
+    </a-scene>
+    <div class="uimusic" id="containermusic">
+        </div>
+
+    <script>
+      $('#containermusic').hide();
+        let sceneElement = document.querySelector("a-scene");
+          var scene = document.querySelector('#containermusic');
+	    let player = document.querySelector("#thuthatfbx");
+	     let myPix = new Array("Assets/01.jpg", "Assets/02.jpg", "Assets/03.jpg", "Assets/04.jpg", "Assets/05.jpg", "Assets/06.jpg", "Assets/07.jpg", "Assets/08.jpg", "Assets/09.jpg", "Assets/10.jpg", "Assets/11.jpg", "Assets/12.jpg");
+        function choosePic() {
+            let randomNum = Math.floor(Math.random() * myPix.length);
+            document.getElementById("my-image").src = myPix[randomNum];
+        }
+	  
+         scene.addEventListener("click", function (e) {
+		  
+		
+		 let audio = new Audio('captureSound.mp3');
+	  let player = document.querySelector("#thuthatfbx");
+          let myEl = document.querySelector("#aimage2");
+		  audio.play();
+		 
+		 
+            myEl.setAttribute("visible", "false");
+		  $('#containermusic').hide();
+		scene.style.display = 'none';
+        
+		 player.setAttribute('animation-mixer',{clip: "*",loop: "repeat", repetitions: 1});
+		  player.addEventListener('animation-finished',function() {
+			   let imageTrue1 = document.getElementsByTagName("a-image")[1];
+			   imageTrue1.setAttribute('visible', true);
+   			  //alert("end");
+			   choosePic();
+			   sceneElement.classList.add("overlay");
+  });
+		 
+		 
+          //   player.addEventListener('animation-finished',function() {
+   
+ //   player.removeAttribute('animation-mixer');
+  //},{once:true});
+
+  //start the animation by appending the animation-mixer
+ // player.addAttribute('animation-mixer',{clip: "*"});
+		 
+             
+        });
+     
+        
+        
+           AFRAME.registerComponent('markerhandler', {
+            tick: function () {
+		     let thungvuong = document.querySelector("#thuthatfbx");
+		   let fbxid = document.querySelector("#idfbx");
+                 let imageTrue = document.getElementsByTagName("a-image")[0];
+                if (document.querySelector("a-marker").object3D.visible == true) {
+                    imageTrue.setAttribute('visible', true);
+			fbxid.setAttribute('visible', true);
+			thungvuong.setAttribute('visible', true);
+			$('#containermusic').show();
+		
+                    
+                } else if (document.querySelector("a-marker").object3D.visible == false) {
+                //  $('#containermusic').hide();
+		//	imageTrue.setAttribute('visible', false);
+		//	fbxid.setAttribute('visible', false);
+                }
+            }
+        });
+	    
+	   
+    
+       
+    
+    </script>
+</body>
+
+</html>
+ 
