@@ -116,23 +116,32 @@
          scene.addEventListener("click", function (e) {
 		  
 		
-		 let audio = new Audio('captureSound.mp3');
-	  let player = document.querySelector("#thuthatfbx");
+	//	 let audio = new Audio('captureSound.mp3');
+	//  let player = document.querySelector("#thuthatfbx");
           let myEl = document.querySelector("#aimage2");
-		  audio.play();
+	//	  audio.play();
+		 let video = document.getElementById("vid");
+		 video.play();
 		 
 		 
             myEl.setAttribute("visible", "false");
+		 myEl.setAttribute('position', '-15 -15 9');
 		  $('#containermusic').hide();
 		scene.style.display = 'none';
         
-		 player.setAttribute('animation-mixer',{clip: "*",loop: "repeat", repetitions: 1});
-		  player.addEventListener('animation-finished',function() {
-			   let imageTrue1 = document.getElementsByTagName("a-image")[1];
+		 document.getElementsByTagName("video")[0].addEventListener("ended", yourFunction, false);
+        function yourFunction(e) {
+		
+		 let imageTrue1 = document.getElementsByTagName("a-image")[1];
 			   imageTrue1.setAttribute('visible', true);
    			  //alert("end");
 			   choosePic();
 			   sceneElement.classList.add("overlay");
+		
+       
+        }
+		 
+			  
   });
 		 
 		 
@@ -151,14 +160,17 @@
         
            AFRAME.registerComponent('markerhandler', {
             tick: function () {
-		     let thungvuong = document.querySelector("#thuthatfbx");
-		   let fbxid = document.querySelector("#idfbx");
+		     let myElvideo = document.querySelector("#aVideoHide");
+		//     let thungvuong = document.querySelector("#thuthatfbx");
+		//   let fbxid = document.querySelector("#idfbx");
                  let imageTrue = document.getElementsByTagName("a-image")[0];
                 if (document.querySelector("a-marker").object3D.visible == true) {
                     imageTrue.setAttribute('visible', true);
 			fbxid.setAttribute('visible', true);
 			thungvuong.setAttribute('visible', true);
 			$('#containermusic').show();
+			
+			myElvideo.setAttribute("visible", "true");
 		
                     
                 } else if (document.querySelector("a-marker").object3D.visible == false) {
