@@ -87,7 +87,7 @@
          <video id="vid" src="Assets/omi_01.mp4" playsinline webkit-playsinline muted> </video>    
         <a-marker type='pattern' url='patter.patt' markerhandler>
 		
-	    <a-video id="aVideoHide" src="#vid" position="0 0 0" rotation="-90 0 0" height="3px" width="3px"
+	    <a-video id="aVideoHide" src="#vid" position="0 0 -2" rotation="-90 0 0" height="3px" width="3px"
                 material="shader: chromakey; color: 0.1 0.9 0.2"></a-video>
 		
 	    </a-marker>
@@ -137,14 +137,9 @@
    			  //alert("end");
 			   choosePic();
 			   sceneElement.classList.add("overlay");
-		
-       
-        }
-		 
-			  
+        }		  
   });
-		 
-		 
+	 
           //   player.addEventListener('animation-finished',function() {
    
  //   player.removeAttribute('animation-mixer');
@@ -165,8 +160,8 @@
                  let imageTrue = document.getElementsByTagName("a-image")[0];
                 if (document.querySelector("a-marker").object3D.visible == true) {
                     imageTrue.setAttribute('visible', true);
-			fbxid.setAttribute('visible', true);
-			thungvuong.setAttribute('visible', true);
+		//	fbxid.setAttribute('visible', true);
+		//	thungvuong.setAttribute('visible', true);
 			$('#containermusic').show();
 			
 			myElvideo.setAttribute("visible", "true");
